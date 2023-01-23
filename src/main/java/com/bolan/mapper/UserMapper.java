@@ -1,6 +1,5 @@
 package com.bolan.mapper;
 
-import com.bolan.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

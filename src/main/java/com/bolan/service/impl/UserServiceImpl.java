@@ -1,7 +1,6 @@
 package com.bolan.service.impl;
 
 import com.bolan.mapper.UserMapper;
-import com.bolan.pojo.User;
 import com.bolan.service.UserService;
 import org.springframework.stereotype.Service;
 
