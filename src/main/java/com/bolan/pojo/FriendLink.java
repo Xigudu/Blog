@@ -9,20 +9,20 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class userAuth {
+public class FriendLink {
 
     private Integer id;
 
-    private Integer userInfoId;
+    private String linkName;
 
-    private String username;
+    private String linkAvatar;
 
-    private String password;
+    private String linkAddress;
+
+    private String linkIntro;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
-
-    private LocalDateTime lastLoginTime;
 
 }

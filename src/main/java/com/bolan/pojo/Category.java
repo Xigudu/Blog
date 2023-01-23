@@ -7,22 +7,16 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class userAuth {
+@AllArgsConstructor
+public class Category {
 
     private Integer id;
 
-    private Integer userInfoId;
-
-    private String username;
-
-    private String password;
+    private String categoryName;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
-
-    private LocalDateTime lastLoginTime;
 
 }

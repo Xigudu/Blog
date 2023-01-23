@@ -9,20 +9,20 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class userAuth {
+public class Photo {
 
     private Integer id;
 
-    private Integer userInfoId;
+    private Integer albumId;
 
-    private String username;
+    private String photoName;
 
-    private String password;
+    private String photoDesc;
+
+    private String photoSrc;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
-
-    private LocalDateTime lastLoginTime;
 
 }

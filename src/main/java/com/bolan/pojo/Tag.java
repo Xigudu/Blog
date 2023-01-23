@@ -9,20 +9,13 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class userAuth {
+public class Tag {
 
     private Integer id;
 
-    private Integer userInfoId;
-
-    private String username;
-
-    private String password;
+    private String tagName;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
-
-    private LocalDateTime lastLoginTime;
-
 }

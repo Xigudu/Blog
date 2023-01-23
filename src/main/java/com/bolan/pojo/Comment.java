@@ -9,20 +9,24 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class userAuth {
+public class Comment {
 
     private Integer id;
 
-    private Integer userInfoId;
+    private Integer userId;
 
-    private String username;
+    private Integer topicId;
 
-    private String password;
+    private String commentContent;
+
+    private Integer replyUserId;
+
+    private Integer parentId;
+
+    private Integer type;
 
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
-
-    private LocalDateTime lastLoginTime;
 
 }

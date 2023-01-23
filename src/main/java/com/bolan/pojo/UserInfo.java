@@ -10,12 +10,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserInfo {
+
     private Integer id;
+
     private String email;
+
     private String nickname;
+
     private String avatar;
+
     private String intro;
+
     private String website;
+
     private LocalDateTime createTime;
+
     private LocalDateTime updateTime;
+
 }
