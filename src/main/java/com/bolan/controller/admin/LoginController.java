@@ -1,5 +1,6 @@
 package com.bolan.controller.admin;
 
+import com.bolan.pojo.userAuth;
 import com.bolan.pojo.vo.Result;
 import com.bolan.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/admin")
 public class LoginController {
+
     @Autowired
     private UserService userService;
 
@@ -31,7 +33,7 @@ public class LoginController {
     public Result login(@RequestParam String username,
                         @RequestParam String password,
                         HttpSession session) {
-        User user = userService.getUser(username, password);
+        userAuth user = userService.getUser(username, password);
         if (user != null) {
             user.setPassword(null);
             session.setAttribute("user",user);

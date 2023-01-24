@@ -1,5 +1,7 @@
 package com.bolan.service;
 
+import com.bolan.pojo.userAuth;
+
 public interface UserService {
-    User getUser(String username, String password);
+    userAuth getUser(String username, String password);
 }

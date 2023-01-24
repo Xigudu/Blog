@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bolan.mapper.UserMapper">
 
-    <select id="getUser" resultType="User">
-        select * from myblog.t_user
+    <select id="getUser" parameterType="String" resultType="userAuth">
+        select * from blog.t_user_auth
         where username=#{username} and password=#{password};
     </select>
 

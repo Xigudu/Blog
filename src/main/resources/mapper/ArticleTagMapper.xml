@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bolan.mapper.ArticleTagMapper">
+
+    <select id="list" resultType="Tag">
+        select tag_name from t_tag
+            left join t_article_tag tat on t_tag.id = tat.tag_id;
+    </select>
+
+</mapper>

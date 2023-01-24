@@ -1,12 +1,14 @@
 package com.bolan.mapper;
 
-import com.bolan.pojo.userAuth;
+import com.bolan.pojo.Category;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-@Repository
-@Mapper
-public interface UserMapper {
+import java.util.List;
 
-    userAuth getUser(String username, String password);
+@Mapper
+@Repository
+public interface CategoryMapper {
+
+    List<Category> list();
 }
