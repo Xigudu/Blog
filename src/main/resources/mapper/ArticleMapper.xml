@@ -9,7 +9,7 @@
         <result property="isTop" column="is_top"/>
         <result property="type" column="type"/>
         <result property="createTime" column="create_time"/>
-        <collection property="tag" ofType="Tag">
+        <collection property="tags" ofType="Tag">
             <result property="tagName" column="tag_name"/>
         </collection>
     </resultMap>
@@ -36,4 +36,7 @@
         select count(1) from t_article where status in (1,2)
     </select>
 
+    <update id="setTop" parameterType="Integer">
+        update t_article set is_top = #{isTop} where id = #{id};
+    </update>
 </mapper>

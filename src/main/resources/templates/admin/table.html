@@ -70,7 +70,7 @@
                         </div>
                         <div class="layui-inline">
                             <div class="layui-input-inline">
-                                <input type="text" name="articleTitle" placeholder="请输入文章名" autocomplete="off" class="layui-input" value="">
+                                <input type="text" id="title" name="articleTitle" placeholder="请输入文章名" autocomplete="off" class="layui-input" value="">
                             </div>
                         </div>
                         <div class="layui-inline">
@@ -94,13 +94,14 @@
             <img src="/imp/{{d.articleCover}}" width="179px" height="100px" style="border-radius: 5px"/>
         </script>
         <script type="text/html" id="tag">
-            <button class="layui-btn layui-btn-primary layui-border-green layui-btn-sm" >{{d.tag.tagName}}</button>
+            {{# layui.each(d.tags, function(index, item){     }}
+            <button class="layui-btn layui-btn-primary layui-border-green layui-btn-sm" >{{item.tagName}}</button>
+            {{# });  }}
         </script>
         <script type="text/html" id="barDemo">
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
-
     </div>
 </div>
 <script th:src="@{/lib/layui-v2.6.3/layui.js}" charset="utf-8"></script>
@@ -112,10 +113,11 @@
 
     }
 
-    layui.use(['form', 'table'], function () {
+    layui.use(['form', 'table', 'laytpl'], function () {
         var $ = layui.jquery,
             form = layui.form,
-            table = layui.table;
+            table = layui.table,
+            laytpl = layui.laytpl;
         table.render({
             elem: '#currentTableId',
             url: '/admin/articles',
@@ -127,7 +129,7 @@
             }],
             cols: [
                 [
-                    {type: 'checkbox', fixed: ''}
+                    {type: 'checkbox'}
                     ,{field:'articleCover', title:'文章封面', width:220, templet:"#img", unresize:true}
                     ,{field:'articleTitle', title:'标题', width:150}
                     ,{field:'categoryName', title:'分类', width:130}
@@ -139,10 +141,10 @@
                     }}
                     ,{field:'createTime', title:'发表时间', width: 197, sort: true, templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
                     ,{field:'isTop', title:'置顶', width:100, templet: function (data) {
-                        if (data.isTop == 0){return '<input type="checkbox" name="close" lay-filter="top" blogId=' + data.id + ' lay-skin="switch" lay-text="ON|OFF">'}
-                        else {return "NO"}
+                        if (data.isTop == 0){return '<div id="'+data.id+'"><input type="checkbox" name="close" lay-filter="top" value=' + data.id + ' lay-skin="switch" lay-text="ON|OFF"></div>'}
+                        else if (data.isTop == 1) {return '<div id="'+data.id+'"></div><input type="checkbox" checked="checked" name="close" lay-filter="top" value=' + data.id + ' lay-skin="switch" lay-text="ON|OFF"></div>'}
                     } }
-                    ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+                    ,{title:'操作', toolbar: '#barDemo', width:150}
                 ]
             ],
             limits: [10, 15, 20, 25],
@@ -150,6 +152,24 @@
             page: true,
             even: true
         });
+
+        form.on('switch(top)', function (data) {
+            var isTop = this.checked?"1":"0";
+            var id = data.value;
+            var url = '/admin/top';
+            res = {
+                'id' : id,
+                'isTop' : isTop
+            }
+            console.log(res)
+            $.post(url,res,function (response) {
+                layer.tips(response.message,'#'+res.id+'',{
+                    tips: [1, '#3595CC'],
+                    time: 4000,
+                    anim: 6
+                });
+            })
+        })
 
         // 监听搜索操作
         form.on('submit(data-search-btn)', function (data) {
@@ -206,7 +226,7 @@
                     var params = {
                         _method:"DELETE"
                     }
-                    $.post(url,params,function (response) {
+                    $.get(url,params,function (response) {
                         if(response.code == 0){
                             layer.msg(response.message, {icon: 1});
                             refreshTable();

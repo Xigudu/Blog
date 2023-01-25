@@ -1,7 +1,6 @@
 package com.bolan.service.impl;
 
 import com.bolan.mapper.ArticleMapper;
-import com.bolan.pojo.Article;
 import com.bolan.pojo.vo.ArticleQuery;
 import com.bolan.pojo.vo.ArticleRes;
 import com.bolan.service.ArticleService;
@@ -24,5 +23,10 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Long count(ArticleQuery articleQuery) {
         return articleMapper.count(articleQuery);
+    }
+
+    @Override
+    public void setTop(Integer id, Integer isTop) {
+        articleMapper.setTop(id, isTop);
     }
 }

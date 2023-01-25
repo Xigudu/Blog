@@ -21,7 +21,7 @@ public class ArticleRes {
 
     private String categoryName;
 
-    private Tag tag;
+    private List<Tag> tags;
 
     private Integer type;
 

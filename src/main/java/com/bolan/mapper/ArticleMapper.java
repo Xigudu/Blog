@@ -1,6 +1,5 @@
 package com.bolan.mapper;
 
-import com.bolan.pojo.Article;
 import com.bolan.pojo.vo.ArticleQuery;
 import com.bolan.pojo.vo.ArticleRes;
 import org.apache.ibatis.annotations.Mapper;
@@ -15,4 +14,6 @@ public interface ArticleMapper {
     List<ArticleRes> list(ArticleQuery articleQuery);
 
     Long count(ArticleQuery articleQuery);
+
+    void setTop(Integer id, Integer isTop);
 }

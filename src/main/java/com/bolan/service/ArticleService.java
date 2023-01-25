@@ -11,4 +11,6 @@ public interface ArticleService {
     List<ArticleRes> list(ArticleQuery articleQuery);
 
     Long count(ArticleQuery articleQuery);
+
+    void setTop(Integer id, Integer isTop);
 }

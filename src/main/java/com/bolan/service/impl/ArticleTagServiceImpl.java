@@ -1,7 +1,6 @@
 package com.bolan.service.impl;
 
 import com.bolan.mapper.ArticleTagMapper;
-import com.bolan.pojo.ArticleTag;
 import com.bolan.pojo.Tag;
 import com.bolan.service.ArticleTagService;
 import org.springframework.stereotype.Service;
@@ -19,4 +18,5 @@ public class ArticleTagServiceImpl implements ArticleTagService {
     public List<Tag> list() {
         return articleTagMapper.list();
     }
+
 }
