@@ -11,12 +11,15 @@ public class MyMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/admin/welcome").setViewName("admin/welcome");
         registry.addViewController("/admin/article").setViewName("admin/table");
+        registry.addViewController("/admin/write").setViewName("admin/simple");
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/imp/**")
                 .addResourceLocations("file:D:/blog/");
+        registry.addResourceHandler("/upload/**")
+                .addResourceLocations("file:D:/blog/upload/");
     }
 
 }
