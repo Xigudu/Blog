@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bolan.mapper.ArticleMapper">
+    <!--查询博客-->
     <resultMap id="blog" type="ArticleRes">
         <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
         <result property="articleCover" column="article_cover"/>
         <result property="articleTitle" column="article_title"/>
+        <result property="articleContent" column="article_content"/>
         <result property="categoryName" column="category_name"/>
         <result property="isTop" column="is_top"/>
         <result property="type" column="type"/>
+        <result property="nickname" column="nickname"/>
         <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="originalUrl" column="original_url"/>
         <collection property="tags" ofType="Tag">
             <result property="tagName" column="tag_name"/>
         </collection>
     </resultMap>
-    
     <select id="list" resultMap="blog">
         select A.id,
                article_cover,
                article_title,
+               article_content,
                is_top,
                type,
                A.create_time as create_time,
@@ -39,4 +45,45 @@
     <update id="setTop" parameterType="Integer">
         update t_article set is_top = #{isTop} where id = #{id};
     </update>
+
+    <!--推荐-->
+    <resultMap id="hotBlog" type="HotArticle">
+        <id property="id" column="id"/>
+        <result property="articleCover" column="article_cover"/>
+        <result property="articleTitle" column="article_title"/>
+        <result property="articleContent" column="article_content"/>
+        <result property="isHot" column="is_hot"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+    <select id="hotList" resultMap="hotBlog">
+        select id,
+               article_cover,
+               article_title,
+               SUBSTR(article_content, 1, 20) as article_content,
+               create_time
+        from t_article where is_hot = '1'
+    </select>
+
+    <!--通过id查询博客-->
+    <select id="getArticleById" resultMap="blog">
+        select a.id,
+               article_cover,
+               article_title,
+               article_content,
+               category_name,
+               tag_name,
+               type,
+               a.create_time,
+               a.update_time,
+               original_url,
+               tur.nickname
+        from t_article a
+            left join t_user_info tur on a.user_id = tur.id
+            left join t_category c on category_id = c.id
+            left join t_article_tag tat on a.id = tat.article_id
+            left join t_tag tt on tat.tag_id = tt.id
+        where status in (1,2)
+        order by A.create_time desc
+        limit #{start},#{limit}
+    </select>
 </mapper>

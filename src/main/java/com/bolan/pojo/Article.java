@@ -25,6 +25,8 @@ public class Article {
 
     private Integer isTop;
 
+    private Integer isHot;
+
     private Integer status;
 
     private Integer type;

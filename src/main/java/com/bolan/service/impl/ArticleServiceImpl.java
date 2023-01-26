@@ -3,6 +3,7 @@ package com.bolan.service.impl;
 import com.bolan.mapper.ArticleMapper;
 import com.bolan.pojo.vo.ArticleQuery;
 import com.bolan.pojo.vo.ArticleRes;
+import com.bolan.pojo.vo.HotArticle;
 import com.bolan.service.ArticleService;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +29,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void setTop(Integer id, Integer isTop) {
         articleMapper.setTop(id, isTop);
+    }
+
+    @Override
+    public List<HotArticle> hotList() {
+        return articleMapper.hotList();
+    }
+
+    @Override
+    public ArticleRes getArticleById(Integer id) {
+        return articleMapper.getArticleById(id);
     }
 }

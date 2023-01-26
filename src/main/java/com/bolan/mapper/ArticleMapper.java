@@ -2,6 +2,7 @@ package com.bolan.mapper;
 
 import com.bolan.pojo.vo.ArticleQuery;
 import com.bolan.pojo.vo.ArticleRes;
+import com.bolan.pojo.vo.HotArticle;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,8 @@ public interface ArticleMapper {
     Long count(ArticleQuery articleQuery);
 
     void setTop(Integer id, Integer isTop);
+
+    List<HotArticle> hotList();
+
+    ArticleRes getArticleById(Integer id);
 }
