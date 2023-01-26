@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>文章阅读</title>
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.css}">
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.6.3/css/layui.css}" />
+    <link rel="stylesheet" th:href="@{/css/master.css}" />
+    <link rel="stylesheet" th:href="@{/css/gloable.css}" />
+    <link rel="stylesheet" th:href="@{/css/nprogress.css}" />
+    <link rel="stylesheet" th:href="@{/css/blog.css}" />
+</head>
+<body>
+    <div class="header">
+    </div>
+    <header class="gird-header" >
+        <div class="header-fixed">
+            <div class="header-inner">
+                <a href="javascript:void(0)" class="header-logo" id="logo">Mr.Bolan</a>
+                <nav class="nav" id="nav">
+                    <ul>
+                        <li><a th:href="@{/index}">首页</a></li>
+                        <li><a th:href="@{/article}">博客</a></li>
+                        <li><a href="message.html">留言</a></li>
+                        <li><a href="link.html">友链</a></li>
+                    </ul>
+                </nav>
+                <a class="phone-menu">
+                    <i></i>
+                    <i></i>
+                    <i></i>
+                </a>
+            </div>
+        </div>
+    </header>
+    <div class="doc-container" id="doc-container">
+        <div class="container-fixed">
+            <div class="col-content" style="width:100%">
+                <div class="inner">
+                    <article class="article-list">
+                        <input type="hidden" value="@Model.BlogTypeID" id="blogtypeid" />
+                        <section class="article-item">
+                            <aside class="title" style="line-height:1.5;">
+                                <h4 th:text="${blog.articleTitle}"></h4>
+                                <p class="fc-grey fs-14">
+                                    <small>
+                                        作者：<a href="javascript:void(0)" target="_blank" class="fc-link" th:text="${blog.nickname}"></a>
+                                    </small>
+                                    <small class="ml10">更新于 <label th:text="${blog.updateTime}"></label> </small>
+                                </p>
+                            </aside>
+                            <div class="time mt10" style="padding-bottom:0;">
+                                <span class="day">22</span>
+                                <span class="month fs-18">5<small class="fs-14">月</small></span>
+                                <span class="year fs-18">2018</span>
+                            </div>
+                            <div class="content artiledetail" style="border-bottom: 1px solid #e1e2e0; padding-bottom: 20px;">
+                                <div id="content" class="typo  typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large" th:utext="${blog.articleContent}"></div>
+                                <div class="copyright mt20">
+                                    <p class="f-toe fc-black">
+                                        非特殊说明，本文版权归 关伯兰 所有，转载请注明出处.
+                                    </p>
+                                    <p class="f-toe">
+                                        本文标题：
+                                        <a th:href="@{/article/{id}(id=${blog.id})}" class="r-title" th:text="${blog.articleTitle}"></a>
+                                    </p>
+                                    <p class="f-toe">
+                                        本文网址：
+                                        <a th:href="@{/article/{id}(id=${blog.id})}" th:text="${blog.originalUrl}"></a>
+                                    </p>
+                                </div>
+                                <div id="aplayer" style="margin:5px 0"></div>
+                                <h6>延伸阅读</h6>
+                                <ol class="b-relation"></ol>
+                            </div>
+<!--                            <div class="mt20 f-fwn fs-24 fc-grey comment" style="border-top: 1px solid #e1e2e0; padding-top: 20px;">-->
+<!--                            </div>-->
+                            <ul class="blog-comment" id="blog-comment"></ul>
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="grid-footer">
+        <div class="footer-fixed">
+            <div class="copyright">
+                <div class="info">
+                    <div class="contact">
+                        <a href="javascript:void(0)" class="github" target="_blank"><i class="fa fa-github"></i></a>
+                        <a href="#" class="qq" target="_blank" ><i class="fa fa-qq"></i></a>
+                        <a href="#" class="email" target="_blank" ><i class="fa fa-envelope"></i></a>
+                        <a href="javascript:void(0)" class="weixin"><i class="fa fa-weixin"></i></a>
+                    </div>
+                    <p class="mt05">
+                        Copyright &copy;关伯兰戏剧工作室出品
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script th:src="@{/lib/layui-v2.6.3/layui.js}"></script>
+    <script th:src="@{/js/yss/gloable.js}"></script>
+    <script th:src="@{/js/plugins/nprogress.js}"></script>
+    <script>NProgress.start();</script>
+    <script th:src="@{/js/pagecomment.js}"></script>
+    <script> 
+        window.onload = function () {
+            NProgress.done();
+        };
+    </script>
+</body>
+</html>
