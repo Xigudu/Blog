@@ -17,4 +17,6 @@ public interface ArticleService {
     List<HotArticle> hotList();
 
     ArticleRes getArticleById(Integer id);
+
+    List<ArticleRes> getList(ArticleQuery articleQuery);
 }

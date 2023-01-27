@@ -40,4 +40,9 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleRes getArticleById(Integer id) {
         return articleMapper.getArticleById(id);
     }
+
+    @Override
+    public List<ArticleRes> getList(ArticleQuery articleQuery) {
+        return articleMapper.getList(articleQuery);
+    }
 }

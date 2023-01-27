@@ -45,7 +45,7 @@
                                     <small>
                                         作者：<a href="javascript:void(0)" target="_blank" class="fc-link" th:text="${blog.nickname}"></a>
                                     </small>
-                                    <small class="ml10">更新于 <label th:text="${blog.updateTime}"></label> </small>
+                                    <small class="ml10">更新于 <label th:text="${#calendars.format(blog.updateTime,'yyyy-MM-dd HH:mm:ss')}"></label> </small>
                                 </p>
                             </aside>
                             <div class="time mt10" style="padding-bottom:0;">

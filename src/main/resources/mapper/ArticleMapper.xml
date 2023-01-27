@@ -86,4 +86,22 @@
         order by A.create_time desc
         limit #{start},#{limit}
     </select>
+
+    <select id="getList" resultMap="blog">
+        select a.id,
+               article_cover,
+               article_title,
+               article_content,
+               category_name,
+               tag_name,
+               type,
+               a.create_time,
+               original_url
+        from t_article a
+                 left join t_category c on category_id = c.id
+                 left join t_article_tag tat on a.id = tat.article_id
+                 left join t_tag tt on tat.tag_id = tt.id
+        where status in (1,2)
+        order by A.create_time desc
+    </select>
 </mapper>

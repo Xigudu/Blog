@@ -9,8 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MdRes {
 
-    private Integer error;
+    private Integer success;
 
-    private String[] url;
+    private String message;
+
+    private String url;
 
 }

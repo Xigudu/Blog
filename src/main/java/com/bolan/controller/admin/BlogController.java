@@ -1,5 +1,7 @@
 package com.bolan.controller.admin;
 
+import com.bolan.pojo.Category;
+import com.bolan.pojo.Tag;
 import com.bolan.pojo.vo.ArticleQuery;
 import com.bolan.pojo.vo.ArticleRes;
 import com.bolan.pojo.vo.MdRes;
@@ -53,10 +55,8 @@ public class BlogController {
     //上传图片
     @ResponseBody
     @RequestMapping("/upload")
-    public MdRes fileUpload(@RequestParam(value = "file")MultipartFile file){
-        //上传路径保存设置
+    public MdRes fileUpload(@RequestParam(value = "editormd-image-file")MultipartFile file){
 
-        //获得SpringBoot当前项目的路径：System.getProperty("user.dir")
         String path = "D:/blog/upload/";
 
         File realPath = new File(path);
@@ -67,7 +67,7 @@ public class BlogController {
         //上传文件地址
         System.out.println("上传文件保存地址："+realPath);
 
-        //解决文件名字问题：我们使用uuid;
+        //解决文件名字问题：使用uuid;
         String filename = "pg-"+ UUID.randomUUID().toString().replaceAll("-", "")+".jpg";
         File newfile = new File(realPath, filename);
         //通过CommonsMultipartFile的方法直接写文件（注意这个时候）
@@ -75,15 +75,22 @@ public class BlogController {
             file.transferTo(newfile);
         } catch (IOException e) {
             e.printStackTrace();
+            return new MdRes(0,"上传失败",null);
         }
         //给editormd进行回调
         String url = "http://localhost:9958/upload/"+ filename;
-        String[] values = {url};
-        MdRes mdRes = new MdRes();
-        mdRes.setError(0);
-        mdRes.setUrl(values);
-        System.out.println(mdRes);
-        return mdRes;
+        return new MdRes(1,"上传成功",url);
+    }
+
+    //撰写博客
+    @GetMapping("/write")
+    public String write(Model model){
+        List<Category> categoryList = categoryService.list();
+        List<Tag> tags = articleTagService.list();
+        model.addAttribute("list",categoryList);
+        model.addAttribute("tag",tags);
+        System.out.println(tags);
+        return "/admin/simple";
     }
 
 }

@@ -10,6 +10,8 @@ spring:
       max-request-size: 100MB
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  thymeleaf:
+    cache: false
 #起别名，mapper路径，驼峰命名规则
 mybatis:
   type-aliases-package: com.bolan.pojo

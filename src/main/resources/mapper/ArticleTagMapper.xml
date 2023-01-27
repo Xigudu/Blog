@@ -3,8 +3,7 @@
 <mapper namespace="com.bolan.mapper.ArticleTagMapper">
 
     <select id="list" resultType="Tag">
-        select tag_name from t_tag
-            left join t_article_tag tat on t_tag.id = tat.tag_id;
+        select tag_name,id from t_tag;
     </select>
 
 </mapper>

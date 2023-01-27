@@ -15,8 +15,6 @@ public class ArticleQuery extends Page {
 
     private Integer categoryId;
 
-    private Integer id;
-
     private String articleTitle;
 
 }
