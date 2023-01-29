@@ -10,6 +10,7 @@
         <result property="articleContent" column="article_content"/>
         <result property="categoryName" column="category_name"/>
         <result property="isTop" column="is_top"/>
+        <result property="isHot" column="is_hot"/>
         <result property="type" column="type"/>
         <result property="nickname" column="nickname"/>
         <result property="createTime" column="create_time"/>
@@ -25,6 +26,7 @@
                article_title,
                article_content,
                is_top,
+               is_hot,
                type,
                A.create_time as create_time,
                category_name as category_name,
@@ -44,6 +46,14 @@
 
     <update id="setTop" parameterType="Integer">
         update t_article set is_top = #{isTop} where id = #{id};
+    </update>
+
+    <update id="setHot" parameterType="Integer">
+        update t_article set is_hot = #{isHot} where id = #{id};
+    </update>
+
+    <update id="setCategoryId" parameterType="Integer">
+        update t_article set category_id = #{categoryId} where id = #{id};
     </update>
 
     <!--推荐-->
@@ -66,34 +76,28 @@
 
     <!--通过id查询博客-->
     <select id="getArticleById" resultMap="blog">
-        select a.id,
-               article_cover,
+        select article_cover,
                article_title,
                article_content,
-               category_name,
-               tag_name,
-               type,
                a.create_time,
                a.update_time,
                original_url,
+               type,
                tur.nickname
         from t_article a
             left join t_user_info tur on a.user_id = tur.id
-            left join t_category c on category_id = c.id
-            left join t_article_tag tat on a.id = tat.article_id
-            left join t_tag tt on tat.tag_id = tt.id
-        where status in (1,2)
+        where a.id = #{id} and status in (1,2)
         order by A.create_time desc
-        limit #{start},#{limit}
     </select>
 
     <select id="getList" resultMap="blog">
         select a.id,
                article_cover,
                article_title,
-               article_content,
+               SUBSTR(article_content, 1, 100) as article_content,
                category_name,
                tag_name,
+               is_top,
                type,
                a.create_time,
                original_url
@@ -103,5 +107,14 @@
                  left join t_tag tt on tat.tag_id = tt.id
         where status in (1,2)
         order by A.create_time desc
+    </select>
+
+    <insert id="add" parameterType="ArticleRes">
+        insert into t_article (user_id, article_cover, article_title, article_content, is_hot, create_time)
+        values (#{USERID},#{articleCover},#{articleTitle},#{articleContent},#{isHot},#{createTime})
+    </insert>
+
+    <select id="getArticleId" parameterType="String" resultType="Integer">
+        select id from t_article where article_title = #{title};
     </select>
 </mapper>

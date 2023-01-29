@@ -32,6 +32,11 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public void setHot(Integer id, Integer isHot) {
+        articleMapper.setHot(id, isHot);
+    }
+
+    @Override
     public List<HotArticle> hotList() {
         return articleMapper.hotList();
     }
@@ -44,5 +49,20 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleRes> getList(ArticleQuery articleQuery) {
         return articleMapper.getList(articleQuery);
+    }
+
+    @Override
+    public void add(ArticleRes articleRes) {
+        articleMapper.add(articleRes);
+    }
+
+    @Override
+    public Integer getArticleId(String title) {
+        return articleMapper.getArticleId(title);
+    }
+
+    @Override
+    public void setCategoryId(Integer id, Integer categoryId) {
+        articleMapper.setCategoryId(id, categoryId);
     }
 }

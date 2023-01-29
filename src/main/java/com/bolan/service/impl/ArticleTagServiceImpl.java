@@ -1,7 +1,8 @@
 package com.bolan.service.impl;
 
 import com.bolan.mapper.ArticleTagMapper;
-import com.bolan.pojo.Tag;
+import com.bolan.pojo.vo.CategoryRes;
+import com.bolan.pojo.vo.TagRes;
 import com.bolan.service.ArticleTagService;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,18 @@ public class ArticleTagServiceImpl implements ArticleTagService {
     private ArticleTagMapper articleTagMapper;
 
     @Override
-    public List<Tag> list() {
-        return articleTagMapper.list();
+    public List<TagRes> tagList() {
+        return articleTagMapper.tagList();
+    }
+
+    @Override
+    public List<CategoryRes> categoryList() {
+        return articleTagMapper.categoryList();
+    }
+
+    @Override
+    public void add(Integer articleId, Integer tagId) {
+        articleTagMapper.add(articleId,tagId);
     }
 
 }

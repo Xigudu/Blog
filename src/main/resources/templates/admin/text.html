@@ -43,18 +43,14 @@
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">文章标签</label>
-                                        <select name="colId" lay-search="" multiple="multiple">
-                                            <option value="">请选择标签</option>
-                                            <option th:each="tags:${tag}" th:text="${tags.tagName}" th:value="${tags.id}">请选择类型</option>
-                                        </select>
+                                        <div class="layui-input-inline">
+                                            <div id="demo1" name="tags" class="xm-select-demo"></div>
+                                        </div>
                                     </div>
                                     <div class="layui-form-item">
                                         <label class="layui-form-label">文章分类</label>
                                         <div class="layui-input-inline" >
-                                            <select name="colId" lay-search="">
-                                                <option value="">请选择分类</option>
-                                                <option th:each="cat:${list}" th:text="${cat.categoryName}" th:value="${cat.id}">请选择类型</option>
-                                            </select>
+                                            <div id="demo2" name="cat" class="xm-select-demo"></div>
                                         </div>
                                     </div>
                                     <div class="layui-form-item">
@@ -110,18 +106,111 @@
 <script th:src="@{/lib/editor/editormd.js}"></script>
 <script th:src="@{/lib/layui-v2.6.3/layui.js}" charset="utf-8"></script>
 <script th:src="@{/js/lay-config.js}" charset="utf-8"></script>
+<script th:src="@{/js/xm-select.js}" charset="utf-8"></script>
 <script type="text/javascript">
     layui.extend({
-        //路径指向本js文件即可
-        multiSelect: '../../static/js/multiple'
-    }).use(['form','layer','upload','multiSelect'], function () {
+
+    }).use(['form','layer','upload'], function () {
         var $ = layui.jquery,
             form = layui.form,
             layer = layui.layer,
-            upload = layui.upload,
-            multiSelect = layui.multiSelect;
+            upload = layui.upload
 
-        multiple.render();
+        var demo1 = xmSelect.render({
+            // 这里绑定css选择器
+            el: '#demo1',
+            // 渲染的数据
+            max: 3,
+            maxMethod(seles, item){
+                layer.msg('标签最多为3个QAQ');
+            },
+            theme: {
+                color: '#6739b6',
+                maxColor: 'orange',
+            },
+            prop: {
+                name: 'tagName',
+                value: 'id',
+            },
+            filterable: true,
+            create: function(val, arr){
+                //返回一个创建成功的对象, val是搜索的数据, arr是搜索后的当前页面数据
+                return {
+                    tagName:  val,
+                    id: null
+                }
+            }
+        })
+        $.ajax({
+            method: 'get',
+            url: '/admin/tag',
+            dataType : 'json',
+            traditional : true,
+        }).then(response => {
+            var res = response.data;
+            // console.log(res)
+            var Res = [];
+            for (var i= 0;i<res.length;i++){
+                var temp = {
+                    "tagName": res[i].tagName,
+                    "id": res[i].id  //value为唯一标识，此处为id
+                }
+                Res.push(temp)
+            }
+            console.log(Res)
+            demo1.update({
+                data: Res,
+                autoRow: true,
+            })
+        });
+
+        var demo2 = xmSelect.render({
+            // 这里绑定css选择器
+            el: '#demo2',
+            // 渲染的数据
+            max: 1,
+            maxMethod(seles, item){
+                layer.msg('分类最多为1个QAQ');
+            },
+            theme: {
+                color: '#bf9df8',
+                maxColor: 'orange',
+            },
+            prop: {
+                name: 'categoryName',
+                value: 'id',
+            },
+            filterable: true,
+            create: function(val, arr){
+                //返回一个创建成功的对象, val是搜索的数据, arr是搜索后的当前页面数据
+                return {
+                    categoryName:  val,
+                    id: null
+                }
+            }
+        })
+        $.ajax({
+            method: 'get',
+            url: '/admin/category',
+            dataType : 'json',
+            traditional : true,
+        }).then(response => {
+            var res = response.data;
+            var Res = [];
+            for (var i= 0;i<res.length;i++){
+                var temp = {
+                    "categoryName": res[i].categoryName,
+                    "id": res[i].id  //value为唯一标识，此处为id
+                }
+                Res.push(temp)
+            }
+            console.log(Res)
+            demo2.update({
+                data: Res,
+                autoRow: true,
+            })
+        });
+
         var testEditor;
 
         $(function () {
@@ -169,13 +258,12 @@
             }
         });
 
+        var t = demo1.getValue();
+
         form.on('submit(*)', function (data) {
-            // var arr = new Array();
-            // $("input:checkbox[name='tags']:checked").each(function(i){
-            //     arr[i] = $(this).val();
-            // });
-            // data.field.tags = arr.join(",");//将数组合并成字符串
-            console.log(data.field)
+            var selectArr = demo1.getValue('name');
+            console.log(selectArr)
+            var selectArr2 = demo2.getValue('name');
             if(data.field.isTop == "on") {
                 data.field.isTop = "1";
             } else {
@@ -192,19 +280,21 @@
                 articleTitle : data.articleTitle,
                 articleCover : data.image,
                 articleContent : data.content,
-                categoryId : data.colId,
-                tag : data.tags,
+                catName : selectArr2,
+                tagName : selectArr,
                 type : data.type,
                 isTop : data.isTop,
                 isHot : data.isHot
             }
-            $.post("/admin/addArticle", art, function (response) {
+            console.log(art)
+            $.post(url, art, function (response) {
                 if (response.code == 0) {
                     // 成功提示
                     layer.msg(response.message, {
                         icon: 1,
-                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        time: 2000, //2秒关闭（如果不配置，默认是3秒）
                     });
+                    setTimeout('window.location.reload()',1000);
                 } else {
                     // 失败则提示错误信息，窗口不关闭
                     layer.msg("新增失败，请联系管理员", {

@@ -2,8 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bolan.mapper.ArticleTagMapper">
 
-    <select id="list" resultType="Tag">
+    <select id="tagList" resultType="TagRes">
         select tag_name,id from t_tag;
     </select>
 
+    <select id="categoryList" resultType="CategoryRes">
+        select id, category_name from t_category;
+    </select>
+
+    <insert id="add" parameterType="Integer">
+        insert into t_article_tag (article_id, tag_id)
+        values (#{articleId},#{tagId});
+    </insert>
 </mapper>

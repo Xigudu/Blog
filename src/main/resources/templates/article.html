@@ -38,7 +38,7 @@
 		        <div class="inner">
 		            <article class="article-list bloglist" id="LAY_bloglist" th:each="blog:${list}">
 						<section class="article-item zoomIn article">       
-							<div class="fc-flag">置顶</div>   
+							<div class="fc-flag" th:if="${blog.isTop == 1}">置顶</div>
 							<h5 class="title">       
 								<span class="fc-blue" th:if="${blog.type == 1}">【原创】</span>
 								<span class="fc-blue" th:if="${blog.type == 2}">【转载】</span>

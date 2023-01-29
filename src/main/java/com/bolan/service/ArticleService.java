@@ -14,9 +14,17 @@ public interface ArticleService {
 
     void setTop(Integer id, Integer isTop);
 
+    void setHot(Integer id, Integer isHot);
+
     List<HotArticle> hotList();
 
     ArticleRes getArticleById(Integer id);
 
     List<ArticleRes> getList(ArticleQuery articleQuery);
+
+    void add(ArticleRes articleRes);
+
+    Integer getArticleId(String title);
+
+    void setCategoryId(Integer id, Integer categoryId);
 }

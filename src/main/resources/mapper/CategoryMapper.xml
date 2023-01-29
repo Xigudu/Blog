@@ -6,4 +6,12 @@
         select * from blog.t_category;
     </select>
 
+    <select id="getId" resultType="Integer">
+        select id from t_category where category_name = #{categoryName};
+    </select>
+
+    <insert id="add">
+        insert into t_category (category_name, create_time)
+        values (#{categoryName},#{createTime});
+    </insert>
 </mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bolan.mapper.TagMapper">
+
+    <select id="getTagId" parameterType="String" resultType="Integer">
+        select id from t_tag where tag_name = #{tagName};
+    </select>
+
+    <insert id="add">
+        insert into t_tag (tag_name, create_time)
+        values (#{tagName}, #{createTime});
+    </insert>
+
+</mapper>

@@ -18,7 +18,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/imp/**")
-                .addResourceLocations("file:D:/blog/");
+                .addResourceLocations("file:D:/blog/cover/");
         registry.addResourceHandler("/upload/**")
                 .addResourceLocations("file:D:/blog/upload/");
     }

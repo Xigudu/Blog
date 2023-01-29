@@ -129,22 +129,26 @@
             }],
             cols: [
                 [
-                    {type: 'checkbox'}
-                    ,{field:'articleCover', title:'文章封面', width:220, templet:"#img", unresize:true}
-                    ,{field:'articleTitle', title:'标题', width:150}
-                    ,{field:'categoryName', title:'分类', width:130}
-                    ,{field:'tag', title:'标签', width:165, templet: "#tag"}
-                    ,{field:'type', title:'类型', width:116, templet: function (data) {
+                    {type: 'checkbox',width: 30}
+                    ,{field:'articleCover', title:'文章封面', width:210, templet:"#img", unresize:true}
+                    ,{field:'articleTitle', title:'标题', width:140}
+                    ,{field:'categoryName', title:'分类', width:120}
+                    ,{field:'tag', title:'标签', width:175, templet: "#tag"}
+                    ,{field:'type', title:'类型', width:100, templet: function (data) {
                         if (data.type == 1){data.type = '<button class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm" >原创</button>';return data.type;}
                         else if (data.type == 2){data.type = '<button class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm" >转载</button>';return data.type;}
                         else {data.type = '<button class="layui-btn layui-btn-primary layui-border-blue layui-btn-sm" >翻译</button>';return data.type;}
                     }}
-                    ,{field:'createTime', title:'发表时间', width: 197, sort: true, templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')}}</div>"}
-                    ,{field:'isTop', title:'置顶', width:100, templet: function (data) {
+                    ,{field:'createTime', title:'发表时间', width: 173, sort: true, templet: "<div>{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd')}}</div>"}
+                    ,{field:'isTop', title:'置顶', width:88, templet: function (data) {
                         if (data.isTop == 0){return '<div id="'+data.id+'"><input type="checkbox" name="close" lay-filter="top" value=' + data.id + ' lay-skin="switch" lay-text="ON|OFF"></div>'}
                         else if (data.isTop == 1) {return '<div id="'+data.id+'"></div><input type="checkbox" checked="checked" name="close" lay-filter="top" value=' + data.id + ' lay-skin="switch" lay-text="ON|OFF"></div>'}
                     } }
-                    ,{title:'操作', toolbar: '#barDemo', width:150}
+                    ,{field:'isHot', title:'推荐', width:88, templet: function (data) {
+                            if (data.isHot == 0){return '<div id="hot'+data.id+'"><input type="checkbox" name="close" lay-filter="hot" value=' + data.id + ' lay-skin="switch" lay-text="ON|OFF"></div>'}
+                            else if (data.isHot == 1) {return '<div id="hot'+data.id+'"></div><input type="checkbox" checked="checked" name="close" lay-filter="hot" value=' + data.id + ' lay-skin="switch" lay-text="ON|OFF"></div>'}
+                    }}
+                    ,{title:'操作', toolbar: '#barDemo', width:146}
                 ]
             ],
             limits: [10, 15, 20, 25],
@@ -161,10 +165,26 @@
                 'id' : id,
                 'isTop' : isTop
             }
-            console.log(res)
             $.post(url,res,function (response) {
                 layer.tips(response.message,'#'+res.id+'',{
                     tips: [1, '#3595CC'],
+                    time: 4000,
+                    anim: 6
+                });
+            })
+        })
+
+        form.on('switch(hot)', function (data) {
+            var isHot = this.checked?"1":"0";
+            var id = data.value;
+            var url = '/admin/hot';
+            res = {
+                'id' : id,
+                'isHot' : isHot
+            }
+            $.post(url,res,function (response) {
+                layer.tips(response.message,'#hot'+res.id+'',{
+                    tips: [1, '#b554cb'],
                     time: 4000,
                     anim: 6
                 });

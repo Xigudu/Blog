@@ -13,6 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ArticleRes {
 
+    private static Integer USERID = 1;
+
     private Integer id;
 
     private Integer userId;
@@ -23,9 +25,15 @@ public class ArticleRes {
 
     private String articleContent;
 
+    private String categoryId;
+
     private String categoryName;
 
-    private List<Tag> tags;
+    private String[] catName;
+
+    private List<TagRes> tags;
+
+    private String[] tagName;
 
     private Integer type;
 
@@ -36,6 +44,8 @@ public class ArticleRes {
     private String originalUrl;
 
     private Integer isTop;
+
+    private Integer isHot;
 
     private String nickname;
 

@@ -1,20 +1,13 @@
-package com.bolan.pojo;
+package com.bolan.pojo.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tag {
-
+public class TagRes {
     private Integer id;
-
     private String tagName;
-
-    private LocalDateTime createTime;
-
 }

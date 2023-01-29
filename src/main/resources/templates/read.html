@@ -55,7 +55,7 @@
                             </div>
                             <div class="content artiledetail" style="border-bottom: 1px solid #e1e2e0; padding-bottom: 20px;">
                                 <div id="content" class="typo  typo-selection js-toc-content m-padded-lr-responsive m-padded-tb-large" th:utext="${blog.articleContent}"></div>
-                                <div class="copyright mt20">
+                                <div class="copyright mt20" th:if="${blog.type == 1}">
                                     <p class="f-toe fc-black">
                                         非特殊说明，本文版权归 关伯兰 所有，转载请注明出处.
                                     </p>
